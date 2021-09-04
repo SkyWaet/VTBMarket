@@ -2,7 +2,6 @@ package com.skywaet.vtbmarket.dao.impl;
 
 import com.skywaet.vtbmarket.VtbMarketApplicationTests;
 import com.skywaet.vtbmarket.exception.notfound.PurchaseNotFoundException;
-import com.skywaet.vtbmarket.exception.notfound.TicketNotFoundException;
 import com.skywaet.vtbmarket.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -20,6 +19,7 @@ class PurchaseJdbcDaoTest extends VtbMarketApplicationTests {
     void clearDb() {
         deliveryOrderDao.deleteAll();
         purchaseDao.deleteAll();
+        productDao.deleteAll();
         userDao.deleteAll();
     }
 

@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS purchases
     id             BIGSERIAL PRIMARY KEY,
     client_id      BIGSERIAL,
     sum_of_payment REAL,
-    pur_status         TEXT,
+    status         TEXT,
     is_deleted     BOOLEAN DEFAULT False,
     FOREIGN KEY (client_id) REFERENCES users (id)
 );

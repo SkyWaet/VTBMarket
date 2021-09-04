@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Builder
-@Data
 @EqualsAndHashCode(callSuper = true)
+@Data
 @AllArgsConstructor
 public class Ticket extends BaseEntity {
     private User author;

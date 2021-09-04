@@ -28,17 +28,27 @@ public class ResultSetParsers {
 
     public static DeliveryOrder parseDeliveryOrder(ResultSet rs) throws SQLException {
         printRs(rs);
-        final Long id = rs.getLong("id");
+        final Long id = rs.getLong("d_id");
         final LocalDateTime dateTime = rs.getTimestamp("date_time").toLocalDateTime();
         final String location = rs.getString("location");
         final String addressee = rs.getString("addressee");
         final String contactNumber = rs.getString("contact_number");
-        final String status = rs.getString("status");
-        final String purId = rs.getString("purchase_id");
-        final String clientId = rs.getString("client_id");
-        final Double sumOfPayment =rs.getDouble("sum_of_payment");
-        return new DeliveryOrder(id, dateTime, location, addressee, contactNumber, status,
-                parsePurchase(rs));
+        final String dStatus = rs.getString("d_status");
+        final Long purId = rs.getLong("pur_id");
+        final Double sumOfPayment = rs.getDouble("sum_of_payment");
+        final String purStatus = rs.getString("pur_status");
+        final Long userId = rs.getLong("user_id");
+        final String login = rs.getString("login");
+        final String password = rs.getString("password");
+        final String userName = rs.getString("user_name");
+        final String surname = rs.getString("surname");
+        final String address = rs.getString("address");
+        final String phoneNumber = rs.getString("phone_number");
+        final User user = new User(userId, login, password, userName, surname, address, phoneNumber);
+        final Purchase purchase = new Purchase(purId, sumOfPayment, purStatus, user);
+
+        return new DeliveryOrder(id, dateTime, location, addressee, contactNumber, dStatus,
+                purchase);
     }
 
     public static Product parseProduct(ResultSet rs) throws SQLException {
@@ -56,7 +66,7 @@ public class ResultSetParsers {
         printRs(rs);
         final Long id = rs.getLong("id");
         final Double sumOfPayment = rs.getDouble("sum_of_payment");
-        final String status = rs.getString("pur_status");
+        final String status = rs.getString("status");
         return new Purchase(id, sumOfPayment, status, parseUser(rs));
     }
 

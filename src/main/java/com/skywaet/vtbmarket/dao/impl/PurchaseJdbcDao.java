@@ -93,7 +93,7 @@ public class PurchaseJdbcDao extends JdbcDao implements PurchaseDao {
     public Purchase create(Purchase newEntity) {
         try {
             final PreparedStatement createPurchase =
-                    getConnection().prepareStatement("INSERT INTO purchases(client_id,sum_of_payment,pur_status) " +
+                    getConnection().prepareStatement("INSERT INTO purchases(client_id,sum_of_payment,status) " +
                             "VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             createPurchase.setLong(1, newEntity.getClient().getId());
@@ -123,7 +123,7 @@ public class PurchaseJdbcDao extends JdbcDao implements PurchaseDao {
         try {
             final PreparedStatement preparedStatement =
                     getConnection().prepareStatement("UPDATE purchases " +
-                            "SET client_id = ?, sum_of_payment = ?, pur_status = ?" +
+                            "SET client_id = ?, sum_of_payment = ?, status = ?" +
                             "WHERE id=? AND NOT is_deleted");
 
             preparedStatement.setLong(1, newEntity.getClient().getId());

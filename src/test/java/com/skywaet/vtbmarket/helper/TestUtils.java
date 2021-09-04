@@ -3,6 +3,7 @@ package com.skywaet.vtbmarket.helper;
 import com.skywaet.vtbmarket.model.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class TestUtils {
@@ -39,7 +40,7 @@ public class TestUtils {
         return DeliveryOrder.builder()
                 .addressee("addressee")
                 .status("ok")
-                .dateTime(LocalDateTime.now())
+                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .location("location")
                 .contactNumber("number")
                 .build();

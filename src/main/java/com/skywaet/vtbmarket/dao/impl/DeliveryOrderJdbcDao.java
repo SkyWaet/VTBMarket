@@ -26,8 +26,14 @@ public class DeliveryOrderJdbcDao extends JdbcDao implements DeliveryOrderDao {
     public List<DeliveryOrder> findAll() {
         try {
             final PreparedStatement preparedStatement =
-                    getConnection().prepareStatement("SELECT * FROM delivery_orders d " +
-                            "JOIN purchases pur on pur.id = d.purchase_id WHERE NOT d.is_deleted");
+                    getConnection().prepareStatement("SELECT d.id AS d_id, " +
+                            "d.date_time, d.location, d.addressee, d.contact_number, d.status AS d_status," +
+                            "pur.id AS pur_id, pur.sum_of_payment, pur.status AS pur_status, " +
+                            "u.id AS user_id, u.login, u.password, u.user_name, u.surname, u.address, u.phone_number" +
+                            " FROM delivery_orders AS d " +
+                            "JOIN purchases AS pur on pur.id = d.purchase_id " +
+                            "JOIN users AS u on pur.client_id = u.id " +
+                            "WHERE NOT d.is_deleted;");
             final ResultSet resultSet = preparedStatement.executeQuery();
             List<DeliveryOrder> result = new ArrayList<>();
             while (resultSet.next()) {
@@ -43,8 +49,14 @@ public class DeliveryOrderJdbcDao extends JdbcDao implements DeliveryOrderDao {
     public DeliveryOrder findById(Long id) {
         try {
             final PreparedStatement preparedStatement =
-                    getConnection().prepareStatement("SELECT * FROM delivery_orders d " +
-                            "JOIN purchases pur on pur.id = d.purchase_id WHERE d.id = ? AND NOT d.is_deleted;");
+                    getConnection().prepareStatement("SELECT d.id AS d_id, " +
+                            "d.date_time, d.location, d.addressee, d.contact_number, d.status AS d_status," +
+                            "pur.id AS pur_id, pur.sum_of_payment, pur.status AS pur_status, " +
+                            "u.id AS user_id, u.login, u.password, u.user_name, u.surname, u.address, u.phone_number" +
+                            " FROM delivery_orders AS d " +
+                            "JOIN purchases AS pur on pur.id = d.purchase_id " +
+                            "JOIN users AS u on pur.client_id = u.id " +
+                            "WHERE d.id = ? AND NOT d.is_deleted;");
             preparedStatement.setLong(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
